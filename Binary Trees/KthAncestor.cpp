@@ -25,23 +25,28 @@ Node* buildTree(vector<int> nodes) {
 
 
 
-// Kth ancestor of a node:
+// Kth ancestor of a node: O(n)
 int KthAncestor(Node* root, int node, int K) {
-    if(root == NULL) return -1;
+    if(root == NULL) return -1; //base case
 
-    if(root->data == node) return 0;
+    if(root->data == node) return 0; //target node found
 
+    // if not then search left and right
     int leftDist = KthAncestor(root->left, node, K);
     int rightDist = KthAncestor(root->right, node, K);
 
+    // node not found in either subtree
     if(leftDist == -1 && rightDist == -1) return -1;
 
-    int validVal = leftDist == -1 ? rightDist : leftDist;
-    if(validVal + 1 == K) {
+    // pick the valid dist amongst left and right ans
+    int dist = leftDist == -1 ? rightDist : leftDist;
+
+    // check if curr node is kth ancestor
+    if(dist + 1 == K) {
         cout << "Kth Ancestor = " << root->data << endl;
     }
 
-    return validVal + 1;
+    return dist + 1; //return updated distance
 }
 
 int main() {
