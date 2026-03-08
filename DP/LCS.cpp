@@ -3,6 +3,8 @@
 #include <string>
 using namespace std;
 
+// LCS = Lowest Common Subsequence problem
+
 // normal recursion => O(2^n+m)
 int lcsRec(string str1, string str2) {
     if(str1.size() == 0 || str2.size() == 0) return 0; //base case
@@ -20,7 +22,7 @@ int lcsRec(string str1, string str2) {
 }
 
 
-// DP approach (memoization) => O(n*W)
+// DP approach (memoization) => O(n*m)
 int lcsMemo(string str1, string str2, vector<vector<int>>& dp) {
     if(str1.size() == 0 || str2.size() == 0) return 0; //base case
     
@@ -42,7 +44,7 @@ int lcsMemo(string str1, string str2, vector<vector<int>>& dp) {
 }
 
 
-// DP approach (tabulation) => O(n*W)
+// DP approach (tabulation) => O(n*m)
 int lcsTab(string str1, string str2) {
     int n = str1.size();
     int m = str2.size();
