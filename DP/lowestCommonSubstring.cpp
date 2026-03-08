@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-// LCS = Lowest Common Substring problem
+// Lowest Common Substring problem
 
 
 // DP approach (tabulation) => O(n*m)
