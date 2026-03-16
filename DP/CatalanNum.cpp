@@ -11,6 +11,7 @@ int recCat(int n) {
 
     int ans = 0;
     for(int i=0; i<n; i++) {
+        // Recursively calculate left part and right part and multiply them
         ans += recCat(i) * recCat(n-i-1);
     }
 
@@ -38,8 +39,11 @@ int tabCat(int n) {
     vector<int> dp(n+1, 0);
     dp[0] = dp[1] = 1;
 
-    for(int i=2; i<=n; i++) {
+    // Build the table from smaller values to bigger values
+    for(int i=2; i<=n; i++) { 
+        // Calculate Catalan number for i
         for(int j=0; j<i; j++) {
+            // Apply Catalan formula
             dp[i] += dp[j] * dp[i-j-1];
         }
     }
