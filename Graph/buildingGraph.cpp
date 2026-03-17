@@ -51,16 +51,22 @@ public:
         cout << endl;
     }
 
-    void dfs(int u, vector<bool>& vis) { //O(V + E)
+    void dfsHelper(int u, vector<bool>& vis) { //O(V + E)
         vis[u] = true;
         cout << u << " ";
 
         list<int> neightbours = l[u];
         for(int v : neightbours) {
                 if(!vis[v]) {
-                    dfs(v, vis);
+                    dfsHelper(v, vis);
                 }
             }
+    }
+
+    void dfs() {
+        vector<bool> vis(7, false);
+        dfsHelper(0, vis);
+        cout << endl;
     }
 
 };
@@ -77,12 +83,10 @@ int main() {
     graph.addEdge(4, 5);
     graph.addEdge(5, 6);
 
-
     graph.printGraph();
 
     graph.bfs();
 
-    vector<bool> vis(7, false);
-    graph.dfs(0, vis);
+    graph.dfs();
     return 0;
 }
