@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<list>
+#include<queue>
 using namespace std;
 
 class Graph {
@@ -28,17 +29,60 @@ public:
         }
     }
 
+    void bfs() { //O(V + E)
+        queue<int> q;
+        vector<bool> visited(V, false);
+        q.push(0);
+        visited[0] = true;
+
+        while(!q.empty()) {
+            int u = q.front();
+            q.pop();
+            cout << u << " ";
+
+            list<int> neightbours = l[u];
+            for(int v : neightbours) {
+                if(!visited[v]) {
+                    visited[v] = true;
+                    q.push(v);
+                }
+            }
+        }
+        cout << endl;
+    }
+
+    void dfs(int u, vector<bool>& vis) { //O(V + E)
+        vis[u] = true;
+        cout << u << " ";
+
+        list<int> neightbours = l[u];
+        for(int v : neightbours) {
+                if(!vis[v]) {
+                    dfs(v, vis);
+                }
+            }
+    }
+
 };
 
 int main() {
-    Graph graph(5);
+    Graph graph(7);
 
     graph.addEdge(0, 1);
-    graph.addEdge(1, 2);
+    graph.addEdge(0, 2);
     graph.addEdge(1, 3);
-    graph.addEdge(2, 3);
     graph.addEdge(2, 4);
+    graph.addEdge(3, 4);
+    graph.addEdge(3, 5);
+    graph.addEdge(4, 5);
+    graph.addEdge(5, 6);
+
 
     graph.printGraph();
+
+    graph.bfs();
+
+    vector<bool> vis(7, false);
+    graph.dfs(0, vis);
     return 0;
 }
