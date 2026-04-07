@@ -1,48 +1,59 @@
-#include<iostream>
-#include<vector>
-#include<list>
-#include<queue>
+#include <iostream>
+#include <vector>
+#include <list>
+#include <queue>
 using namespace std;
 
-class Graph {
+class Graph
+{
     int V;
-    list<int>* l;
+    list<int> *l;
+
 public:
-    Graph(int V) {
+    Graph(int V)
+    {
         this->V = V;
-        l = new list<int> [V];
-    }
-    
-    void addEdge(int u, int v) {
-        l[u].push_back(v);  //u->v
-        l[v].push_back(u);  //v->u
+        l = new list<int>[V];
     }
 
-    void printGraph() {
-        for(int u=0; u<V; u++) {
-            list<int> neighbours = l[u];  //neighbours => list of connections of u
+    void addEdge(int u, int v)
+    {
+        l[u].push_back(v); // u->v
+        l[v].push_back(u); // v->u
+    }
+
+    void printGraph()
+    {
+        for (int u = 0; u < V; u++)
+        {
+            list<int> neighbours = l[u]; // neighbours => list of connections of u
             cout << u << " : ";
-            for(int v: neighbours) {  //for each neighbour v
+            for (int v : neighbours)
+            { // for each neighbour v
                 cout << v << ", ";
             }
             cout << endl;
         }
     }
 
-    void bfs() { //O(V + E)
+    void bfs()
+    { // O(V + E)
         queue<int> q;
         vector<bool> visited(V, false);
         q.push(0);
         visited[0] = true;
 
-        while(!q.empty()) {
+        while (!q.empty())
+        {
             int u = q.front();
             q.pop();
             cout << u << " ";
 
             list<int> neightbours = l[u];
-            for(int v : neightbours) {
-                if(!visited[v]) {
+            for (int v : neightbours)
+            {
+                if (!visited[v])
+                {
                     visited[v] = true;
                     q.push(v);
                 }
@@ -51,27 +62,31 @@ public:
         cout << endl;
     }
 
-    void dfsHelper(int u, vector<bool>& vis) { //O(V + E)
+    void dfsHelper(int u, vector<bool> &vis)
+    { // O(V + E)
         vis[u] = true;
         cout << u << " ";
 
         list<int> neightbours = l[u];
-        for(int v : neightbours) {
-                if(!vis[v]) {
-                    dfsHelper(v, vis);
-                }
+        for (int v : neightbours)
+        {
+            if (!vis[v])
+            {
+                dfsHelper(v, vis);
             }
+        }
     }
 
-    void dfs() {
+    void dfs()
+    {
         vector<bool> vis(7, false);
         dfsHelper(0, vis);
         cout << endl;
     }
-
 };
 
-int main() {
+int main()
+{
     Graph graph(7);
 
     graph.addEdge(0, 1);
