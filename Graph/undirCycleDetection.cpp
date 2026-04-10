@@ -51,7 +51,13 @@ public:
 
     bool isCycleUndir() {
         vector<bool> vis(V, false);
-        return undirCycleHelper(0, -1, vis);
+        for(int i=0; i<V; i++) { //for disconnected components in directed graph
+            if(!vis[i]) {
+                if(undirCycleHelper(0, -1, vis))
+                    return true;
+            }
+        }
+        return false;
     }
 
 };

@@ -1,4 +1,4 @@
-// cycle detection in directed graph
+// finding all possible paths to reach the destination
 
 #include <iostream>
 #include <vector>
@@ -36,49 +36,52 @@ public:
         }
     }
 
-    bool dirCycleHelper(int src, vector<bool>& vis, vector<bool>& recPath) {
+    void pathHelper(int src, int dest, vector<bool>& vis, vector<int> &path) {
+        path.push_back(src);
+
+        if(src == dest) {
+            for(int x : path) {
+                cout << x << " ";
+            } 
+            cout << endl; 
+            path.pop_back(); //remove dest node from path
+            return;
+        }
+
         vis[src] = true;
-        recPath[src] = true;
 
         for(int v : l[src]) {
             if(!vis[v]) {
-                if(dirCycleHelper(v, vis, recPath)) 
-                    return true;
-            } else {
-                if(recPath[v])
-                    return true;
+                pathHelper(v, dest, vis, path);
             }
         }
-        recPath[src] = false;
-        return false;
+
+        vis[src] = false;
+        path.pop_back(); //backtrack
     }
 
-    bool isCycleDir() {
+    void printAllPaths(int src, int dest) {
         vector<bool> vis(V, false);
-        vector<bool> recPath(V, false);
-        for(int i=0; i<V; i++) { //for disconnected components in directed graph
-            if(!vis[i]) {
-                if(dirCycleHelper(i, vis, recPath)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        vector<int> path;
+        pathHelper(src, dest, vis, path);
     }
-
 };
 
 int main(){
-    int V = 4;
+    int V = 6;
     Graph graph(V, false);
 
     // directed graph
-    graph.addEdge(1, 0);
-    graph.addEdge(0, 2); 
+    graph.addEdge(0, 3);
     graph.addEdge(2, 3);
-    graph.addEdge(3, 0); //Back Edge
+    graph.addEdge(3, 1);
+    graph.addEdge(4, 0);
+    graph.addEdge(4, 1); 
+    graph.addEdge(5, 0);
+    graph.addEdge(5, 2);
 
-    cout << graph.isCycleDir() << endl;
-    
+    int src = 5, dest = 1;
+    graph.printAllPaths(src, dest);
+
     return 0;
 }
