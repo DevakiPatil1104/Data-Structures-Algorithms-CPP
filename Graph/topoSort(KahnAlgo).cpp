@@ -1,4 +1,4 @@
-// topological sort using dfs approach 
+// topological sort using bfs approach (Kahn's Algorithm) => O(V+E)
 
 #include <iostream>
 #include <vector>
