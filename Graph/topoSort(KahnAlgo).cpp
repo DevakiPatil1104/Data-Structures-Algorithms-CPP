@@ -10,71 +10,66 @@ using namespace std;
 class Graph {
     int V;
     list<int> *l;
-    bool isUndir;
 
 public:
-    Graph(int V, bool isUndir=true) {
+    Graph(int V) {
         this->V = V;
         l = new list<int>[V];
-        this->isUndir = isUndir;
     }
 
     void addEdge(int u, int v) {
         l[u].push_back(v); // u->v
-        if(isUndir) {
-            l[v].push_back(u); // v->u
-        }
     }
 
     void printGraph() {
         for (int u = 0; u < V; u++) {
-            list<int> neighbours = l[u]; 
             cout << u << " : ";
-            for (int v : neighbours) { 
+            for (int v : l[u]) { 
                 cout << v << ", ";
             }
             cout << endl;
         }
     }
 
-    void dfs(int node, vector<bool>& vis, stack<int>& s) {
-        vis[node] = true;
-
-        for(int v : l[node]) {
-            if(!vis[v]) {
-                dfs(v, vis, s);
+    void calIndegree(vector<int>& indeg) {
+        for(int u=0; u<V; u++) {
+            for(int v : l[u]) {
+                indeg[v]++;
             }
         }
-
-        s.push(node);
     }
 
-    void topoSort() {
-        vector<bool> vis(V, false);
-        stack<int> s;
-
+    void topoSort() { //Kahn's Algo
+        vector<int> indeg(V, 0);
+        calIndegree(indeg);
+        queue<int> q;
+        //0 indeg nodes -> starting point
         for(int i=0; i<V; i++) {
-            if(!vis[i]) {
-                dfs(i, vis, s);
+            if(indeg[i] == 0) {
+                q.push(i);
             }
         }
 
-        vector<int> topoOrder;
-        while(!s.empty()) {
-            topoOrder.push_back(s.top());
-            s.pop();
+        while(!q.empty()) {
+            int curr = q.front();
+            q.pop();
+            cout << curr << " ";
+
+            for(int v : l[curr]) {
+                indeg[v]--;
+                if(indeg[v] == 0) {
+                    q.push(v);
+                }
+            }
         }
 
-        for(int x : topoOrder) {
-            cout << x << " ";
-        } 
         cout << endl;
     }
 };
 
 int main(){
     int V = 6;
-    Graph graph(V, false);
+    Graph graph(V);
 
     // directed acyclic graph (DAG)
     graph.addEdge(2, 3);
@@ -85,6 +80,5 @@ int main(){
     graph.addEdge(5, 2);
 
     graph.topoSort();
-
     return 0;
 }
