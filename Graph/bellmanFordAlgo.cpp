@@ -17,7 +17,7 @@ public:
     }
 };
 
-void bellmanFord(int V, vector<vector<Edge>> graph, int src) {
+void bellmanFord(int V, vector<vector<Edge>> graph, int src) { //O(V.E)
     vector<int> dist(V, INT16_MAX);
     dist[src] = 0;
 
