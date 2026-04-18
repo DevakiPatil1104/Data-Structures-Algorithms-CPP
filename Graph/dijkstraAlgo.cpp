@@ -17,7 +17,7 @@ public:
     }
 };
 
-void dijkstra(int src, vector<vector<Edge>> graph, int V) {
+void dijkstra(int src, vector<vector<Edge>> graph, int V) { //O((V+E)log(V)) bcz of using pq
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq; //min heap
     // pair(dist[v], v)
     vector<int> dist(V, INT16_MAX);
