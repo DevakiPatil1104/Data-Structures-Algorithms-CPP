@@ -1,8 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// LC 53. Maximum Subarray
-
 // Kadane's Algorithm (optimal approach) => TC = O(n)
 int maxSubarraySum(int arr[], int n){
     int currSum = 0;
