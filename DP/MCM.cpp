@@ -46,7 +46,7 @@ int mcmMemo(vector<int> arr, int i, int j, vector<vector<int>>& dp) {  //O(n^3)
 int main() {
     vector<int> arr = {1, 2, 3, 4, 3};
     int n = arr.size();
-
+    
     cout << mcmRec(arr, 1, n-1) << endl;
 
     vector<vector<int>> dp(n, vector<int>(n, -1));
